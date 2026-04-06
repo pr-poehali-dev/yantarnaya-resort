@@ -4,89 +4,46 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 36 25% 96%;
+    --foreground: 25 35% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 36 20% 94%;
+    --card-foreground: 25 35% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 36 20% 94%;
+    --popover-foreground: 25 35% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 22 45% 32%;
+    --primary-foreground: 36 30% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 85 20% 82%;
+    --secondary-foreground: 25 35% 12%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 36 15% 88%;
+    --muted-foreground: 25 20% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 28 60% 48%;
+    --accent-foreground: 36 30% 95%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 30 20% 82%;
+    --input: 30 20% 82%;
+    --ring: 22 45% 32%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom palette */
+    --earth-dark: #3d2b1f;
+    --earth-medium: #7d5a3c;
+    --earth-light: #c4a882;
+    --earth-cream: #f5efe6;
+    --moss: #6b7f5e;
+    --moss-light: #a8b89a;
+    --terracotta: #b5622a;
+    --sand: #d4b896;
+    --bark: #2c1f14;
   }
 }
 
@@ -95,7 +52,168 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: "Golos Text", sans-serif;
+    background-color: var(--earth-cream);
+    color: var(--earth-dark);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Cormorant", serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "Cormorant", serif;
+  }
+
+  .font-body {
+    font-family: "Golos Text", sans-serif;
+  }
+
+  .texture-overlay {
+    position: relative;
+  }
+
+  .texture-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+  }
+
+  .section-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--terracotta);
+    display: block;
+    margin: 0 auto 1.5rem;
+  }
+
+  .section-divider-left {
+    width: 60px;
+    height: 2px;
+    background: var(--terracotta);
+    display: block;
+    margin: 0 0 1.5rem;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.7s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+  .delay-300 {
+    animation-delay: 0.3s;
+  }
+  .delay-400 {
+    animation-delay: 0.4s;
+  }
+  .delay-500 {
+    animation-delay: 0.5s;
+  }
+
+  .btn-primary {
+    background-color: var(--terracotta);
+    color: var(--earth-cream);
+    padding: 0.75rem 2rem;
+    font-family: "Golos Text", sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--earth-medium);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.2);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--earth-cream);
+    padding: 0.75rem 2rem;
+    font-family: "Golos Text", sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(245, 239, 230, 0.6);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-outline:hover {
+    background: rgba(245, 239, 230, 0.15);
+    border-color: var(--earth-cream);
+  }
+
+  .card-nature {
+    background: rgba(245, 239, 230, 0.7);
+    border: 1px solid rgba(196, 168, 130, 0.3);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+  }
+
+  .card-nature:hover {
+    box-shadow: 0 8px 32px rgba(61, 43, 31, 0.12);
+    transform: translateY(-4px);
+  }
+
+  .nav-link {
+    color: var(--earth-cream);
+    font-family: "Golos Text", sans-serif;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    opacity: 1;
   }
 }
