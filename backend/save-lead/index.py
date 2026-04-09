@@ -1,6 +1,6 @@
 import json
 import os
-import smtplib
+import smtplib  # noqa
 from email.mime.text import MIMEText
 
 import psycopg2
