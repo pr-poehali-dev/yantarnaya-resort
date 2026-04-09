@@ -83,8 +83,6 @@ const PROMOS = [
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(false);
-  const [bookingDone, setBookingDone] = useState(false);
-  const [form, setForm] = useState({ checkin: "", checkout: "", guests: "2 гостя", room: "Домик с верандой", name: "", phone: "" });
   const heroImgRef = useRef<HTMLImageElement>(null);
 
   useReveal();
@@ -98,13 +96,6 @@ export default function Index() {
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
   };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setBookingDone(true);
-  };
-
-  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div style={{ background: "var(--color-bg)", color: "var(--color-text)", fontFamily: "var(--font-body)" }}>
@@ -414,69 +405,84 @@ export default function Index() {
         </div>
       </section>
 
-      {/* BOOKING */}
+      {/* CONTACTS */}
       <section id="booking" className="py-20 lg:py-28" style={{ background: "var(--color-bg)" }}>
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="text-center mb-12 reveal">
-            <span className="section-label">Прямое бронирование</span>
-            <h2 className="font-display font-normal mb-4" style={{ fontSize: "clamp(2rem,1.2rem + 2.5vw,3.5rem)", color: "var(--color-text)" }}>Выберите даты и домик</h2>
-            <p style={{ color: "var(--color-text-muted)", lineHeight: 1.7 }}>Лучшая цена гарантирована. Мгновенное подтверждение.</p>
+            <span className="section-label">Связаться с нами</span>
+            <h2 className="font-display font-normal mb-4" style={{ fontSize: "clamp(2rem,1.2rem + 2.5vw,3.5rem)", color: "var(--color-text)" }}>
+              Готовы ответить<br />прямо сейчас
+            </h2>
+            <p style={{ color: "var(--color-text-muted)", lineHeight: 1.7 }}>
+              Выберите удобный способ — ответим в течение нескольких минут
+            </p>
           </div>
 
-          {bookingDone ? (
-            <div className="reveal text-center py-14 px-8 rounded-[0.875rem] border max-w-[500px] mx-auto" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}>
-              <div className="text-5xl mb-5">🎉</div>
-              <h3 className="font-display text-2xl mb-3" style={{ color: "var(--color-text)" }}>Заявка принята!</h3>
-              <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>Мы свяжемся с вами в течение 15 минут. Проверьте WhatsApp или телефон.</p>
+          <div className="reveal max-w-[700px] mx-auto">
+            {/* Main contact cards */}
+            <div className="grid sm:grid-cols-2 gap-5 mb-6">
+              {/* Telegram */}
+              <a
+                href="https://t.me/yantarnaya_baza"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col items-center justify-center gap-4 p-8 rounded-[0.875rem] border transition-all duration-300 hover:-translate-y-1 text-decoration-none"
+                style={{ background: "var(--color-surface)", borderColor: "var(--color-border)", boxShadow: "var(--shadow-sm)", textDecoration: "none" }}
+                onMouseEnter={e => (e.currentTarget.style.boxShadow = "var(--shadow-md)")}
+                onMouseLeave={e => (e.currentTarget.style.boxShadow = "var(--shadow-sm)")}
+              >
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110" style={{ background: "linear-gradient(135deg, #2AABEE, #229ED9)" }}>
+                  ✈️
+                </div>
+                <div className="text-center">
+                  <div className="font-display text-xl font-semibold mb-1" style={{ color: "var(--color-text)" }}>Telegram</div>
+                  <div className="text-sm" style={{ color: "var(--color-text-muted)" }}>Написать в Telegram</div>
+                </div>
+                <div className="w-full py-3 rounded-xl text-center text-sm font-medium font-body transition-all" style={{ background: "linear-gradient(135deg, #2AABEE, #229ED9)", color: "#fff" }}>
+                  Открыть чат →
+                </div>
+              </a>
+
+              {/* Phone */}
+              <a
+                href="tel:+79046299439"
+                className="group flex flex-col items-center justify-center gap-4 p-8 rounded-[0.875rem] border transition-all duration-300 hover:-translate-y-1"
+                style={{ background: "var(--color-surface)", borderColor: "var(--color-border)", boxShadow: "var(--shadow-sm)", textDecoration: "none" }}
+                onMouseEnter={e => (e.currentTarget.style.boxShadow = "var(--shadow-md)")}
+                onMouseLeave={e => (e.currentTarget.style.boxShadow = "var(--shadow-sm)")}
+              >
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110" style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-primary-hover))" }}>
+                  📞
+                </div>
+                <div className="text-center">
+                  <div className="font-display text-xl font-semibold mb-1" style={{ color: "var(--color-text)" }}>Телефон</div>
+                  <div className="text-sm font-medium" style={{ color: "var(--color-text-muted)" }}>+7 (904) 629-94-39</div>
+                </div>
+                <div className="w-full py-3 rounded-xl text-center text-sm font-medium font-body transition-all" style={{ background: "var(--color-primary)", color: "#fff" }}>
+                  Позвонить →
+                </div>
+              </a>
             </div>
-          ) : (
-            <div className="reveal max-w-[800px] mx-auto rounded-[0.875rem] border p-8 md:p-12" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)", boxShadow: "var(--shadow-lg)" }}>
-              <h3 className="font-display text-xl font-normal text-center mb-7" style={{ color: "var(--color-text)" }}>Оставьте заявку — ответим в течение 15 минут</h3>
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {(["checkin","checkout"] as const).map(key => (
-                  <div key={key} className="flex flex-col gap-2">
-                    <label className="text-xs uppercase tracking-[0.05em] font-medium font-body" style={{ color: "var(--color-text-muted)" }}>{key === "checkin" ? "Дата заезда" : "Дата выезда"}</label>
-                    <input type="date" required min={key === "checkin" ? today : (form.checkin || today)}
-                      value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                      className="rounded-lg px-4 py-3 text-base outline-none"
-                      style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text)", fontFamily: "var(--font-body)" }} />
-                  </div>
-                ))}
-                {([["guests","Гости",["1 гость","2 гостя","3 гостя","4 гостя","5+ гостей"]],["room","Тип размещения",["Стандартный номер","Домик с верандой","Коттедж у воды","Люкс — панорама моря","Корпоратив / мероприятие"]]] as [keyof typeof form, string, string[]][]).map(([key, label, opts]) => (
-                  <div key={key} className="flex flex-col gap-2">
-                    <label className="text-xs uppercase tracking-[0.05em] font-medium font-body" style={{ color: "var(--color-text-muted)" }}>{label}</label>
-                    <select value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                      className="rounded-lg px-4 py-3 text-base outline-none appearance-none cursor-pointer"
-                      style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text)", fontFamily: "var(--font-body)" }}>
-                      {opts.map(o => <option key={o}>{o}</option>)}
-                    </select>
-                  </div>
-                ))}
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs uppercase tracking-[0.05em] font-medium font-body" style={{ color: "var(--color-text-muted)" }}>Ваше имя</label>
-                  <input type="text" required placeholder="Как вас зовут?" value={form.name}
-                    onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                    className="rounded-lg px-4 py-3 text-base outline-none"
-                    style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text)", fontFamily: "var(--font-body)" }} />
+
+            {/* Working hours */}
+            <div className="rounded-[0.875rem] border p-6 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}>
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🕐</span>
+                <div>
+                  <div className="text-sm font-medium font-body" style={{ color: "var(--color-text)" }}>Часы работы</div>
+                  <div className="text-sm" style={{ color: "var(--color-text-muted)" }}>Ежедневно, 9:00 — 21:00</div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs uppercase tracking-[0.05em] font-medium font-body" style={{ color: "var(--color-text-muted)" }}>Телефон / WhatsApp</label>
-                  <input type="tel" required placeholder="+7 (___) ___-__-__" value={form.phone}
-                    onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                    className="rounded-lg px-4 py-3 text-base outline-none"
-                    style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text)", fontFamily: "var(--font-body)" }} />
-                </div>
-                <div className="sm:col-span-2 mt-1">
-                  <button type="submit" className="btn-sea w-full justify-center" style={{ fontSize: "1rem", padding: "1rem 2rem" }}>
-                    Отправить заявку — ответим через 15 минут
-                  </button>
-                </div>
-              </form>
-              <p className="text-xs text-center mt-5" style={{ color: "var(--color-text-faint)" }}>
-                🔒 Бесплатная отмена за 48 часов · Лучшая цена при прямом бронировании · Без скрытых комиссий
-              </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full pulse-dot" style={{ background: "#22c55e" }} />
+                <span className="text-sm font-medium font-body" style={{ color: "#22c55e" }}>Принимаем заявки</span>
+              </div>
             </div>
-          )}
+
+            <p className="text-xs text-center mt-5" style={{ color: "var(--color-text-faint)" }}>
+              🔒 Лучшая цена при прямом обращении · Без комиссий агрегаторов · Бесплатная отмена за 48 часов
+            </p>
+          </div>
         </div>
       </section>
 
