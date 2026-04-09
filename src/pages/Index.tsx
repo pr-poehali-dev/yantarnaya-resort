@@ -420,7 +420,7 @@ export default function Index() {
 
           <div className="reveal max-w-[700px] mx-auto">
             {/* Main contact cards */}
-            <div className="grid sm:grid-cols-2 gap-5 mb-6">
+            <div className="grid sm:grid-cols-3 gap-5 mb-6">
               {/* Telegram */}
               <a
                 href="https://t.me/yantarnaya_baza"
@@ -439,6 +439,28 @@ export default function Index() {
                   <div className="text-sm" style={{ color: "var(--color-text-muted)" }}>Написать в Telegram</div>
                 </div>
                 <div className="w-full py-3 rounded-xl text-center text-sm font-medium font-body transition-all" style={{ background: "linear-gradient(135deg, #2AABEE, #229ED9)", color: "#fff" }}>
+                  Открыть чат →
+                </div>
+              </a>
+
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/79046299439"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col items-center justify-center gap-4 p-8 rounded-[0.875rem] border transition-all duration-300 hover:-translate-y-1"
+                style={{ background: "var(--color-surface)", borderColor: "var(--color-border)", boxShadow: "var(--shadow-sm)", textDecoration: "none" }}
+                onMouseEnter={e => (e.currentTarget.style.boxShadow = "var(--shadow-md)")}
+                onMouseLeave={e => (e.currentTarget.style.boxShadow = "var(--shadow-sm)")}
+              >
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110" style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}>
+                  💬
+                </div>
+                <div className="text-center">
+                  <div className="font-display text-xl font-semibold mb-1" style={{ color: "var(--color-text)" }}>WhatsApp</div>
+                  <div className="text-sm" style={{ color: "var(--color-text-muted)" }}>Написать в WhatsApp</div>
+                </div>
+                <div className="w-full py-3 rounded-xl text-center text-sm font-medium font-body" style={{ background: "linear-gradient(135deg, #25D366, #128C7E)", color: "#fff" }}>
                   Открыть чат →
                 </div>
               </a>
