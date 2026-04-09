@@ -1,11 +1,37 @@
 import json
 import os
+import smtplib
+from email.mime.text import MIMEText
 
 import psycopg2
 
+SMTP_HOST = "smtp.yandex.ru"
+SMTP_PORT = 465
+EMAIL_FROM = "b.yantarnaya@yandex.ru"
+EMAIL_TO   = "b.yantarnaya@yandex.ru"
+
+
+def send_email(name: str, phone: str, message: str | None, lead_id: int) -> None:
+    body = f"""Новая заявка с сайта «Янтарная» #{lead_id}
+
+Имя:     {name}
+Телефон: {phone}
+Сообщение: {message or '—'}
+
+Ответьте как можно скорее!
+"""
+    msg = MIMEText(body, "plain", "utf-8")
+    msg["Subject"] = f"Заявка с сайта — {name}"
+    msg["From"]    = EMAIL_FROM
+    msg["To"]      = EMAIL_TO
+
+    with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as smtp:
+        smtp.login(EMAIL_FROM, os.environ["SMTP_PASSWORD"])
+        smtp.sendmail(EMAIL_FROM, EMAIL_TO, msg.as_string())
+
 
 def handler(event: dict, context) -> dict:
-    """Сохраняет заявку клиента (имя, телефон, канал, сообщение) в таблицу leads."""
+    """Сохраняет заявку в БД и отправляет уведомление на почту b.yantarnaya@yandex.ru."""
 
     cors = {
         "Access-Control-Allow-Origin": "*",
@@ -40,6 +66,8 @@ def handler(event: dict, context) -> dict:
     conn.commit()
     cur.close()
     conn.close()
+
+    send_email(name, phone, message, row[0])
 
     return {
         "statusCode": 200,
