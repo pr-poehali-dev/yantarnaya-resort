@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
+const SAVE_LEAD_URL = "https://functions.poehali.dev/ad0b3dc1-fb68-48f6-a2f0-def13c265ed5";
+
 const IMG_HERO   = "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/files/56fccdd5-67c3-4389-99cb-36e86db45748.jpg";
 const IMG_CABIN  = "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/files/2c011a53-20b3-4408-b6de-c3163ba2e13c.jpg";
 const IMG_BANYA  = "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/files/24083aa8-cc22-4e30-845b-6109922f7346.jpg";
@@ -83,7 +85,23 @@ const PROMOS = [
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(false);
+  const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [formState, setFormState] = useState<"idle" | "loading" | "done" | "error">("idle");
   const heroImgRef = useRef<HTMLImageElement>(null);
+
+  const handleLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormState("loading");
+    try {
+      const res = await fetch(SAVE_LEAD_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, channel: "site" }),
+      });
+      if (res.ok) { setFormState("done"); setForm({ name: "", phone: "", message: "" }); }
+      else setFormState("error");
+    } catch { setFormState("error"); }
+  };
 
   useReveal();
   useParallax(heroImgRef);
@@ -499,6 +517,61 @@ export default function Index() {
                 <span className="w-2 h-2 rounded-full pulse-dot" style={{ background: "#22c55e" }} />
                 <span className="text-sm font-medium font-body" style={{ color: "#22c55e" }}>Принимаем заявки</span>
               </div>
+            </div>
+
+            {/* Callback form */}
+            <div className="mt-6 rounded-[0.875rem] border p-6 md:p-8" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}>
+              <div className="text-center mb-6">
+                <div className="font-display text-xl font-semibold mb-1" style={{ color: "var(--color-text)" }}>Или оставьте заявку</div>
+                <div className="text-sm" style={{ color: "var(--color-text-muted)" }}>Перезвоним в течение 15 минут</div>
+              </div>
+
+              {formState === "done" ? (
+                <div className="text-center py-6">
+                  <div className="text-4xl mb-3">🎉</div>
+                  <div className="font-display text-xl mb-2" style={{ color: "var(--color-text)" }}>Заявка принята!</div>
+                  <div className="text-sm" style={{ color: "var(--color-text-muted)" }}>Перезвоним вам в ближайшее время</div>
+                  <button onClick={() => setFormState("idle")} className="mt-4 text-sm underline" style={{ color: "var(--color-primary)" }}>Отправить ещё</button>
+                </div>
+              ) : (
+                <form onSubmit={handleLead} className="flex flex-col gap-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs uppercase tracking-[0.05em] font-medium font-body" style={{ color: "var(--color-text-muted)" }}>Ваше имя *</label>
+                      <input
+                        type="text" required placeholder="Как вас зовут?"
+                        value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                        className="rounded-lg px-4 py-3 text-sm outline-none transition-all"
+                        style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text)", fontFamily: "var(--font-body)" }}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs uppercase tracking-[0.05em] font-medium font-body" style={{ color: "var(--color-text-muted)" }}>Телефон *</label>
+                      <input
+                        type="tel" required placeholder="+7 (___) ___-__-__"
+                        value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                        className="rounded-lg px-4 py-3 text-sm outline-none transition-all"
+                        style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text)", fontFamily: "var(--font-body)" }}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs uppercase tracking-[0.05em] font-medium font-body" style={{ color: "var(--color-text-muted)" }}>Сообщение</label>
+                    <textarea
+                      rows={3} placeholder="Даты заезда, кол-во гостей, вопросы..."
+                      value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                      className="rounded-lg px-4 py-3 text-sm outline-none resize-none transition-all"
+                      style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text)", fontFamily: "var(--font-body)" }}
+                    />
+                  </div>
+                  {formState === "error" && (
+                    <p className="text-sm text-center" style={{ color: "#ef4444" }}>Что-то пошло не так. Попробуйте ещё раз или позвоните нам.</p>
+                  )}
+                  <button type="submit" disabled={formState === "loading"} className="btn-sea justify-center w-full" style={{ fontSize: "0.9375rem", opacity: formState === "loading" ? 0.7 : 1 }}>
+                    {formState === "loading" ? "Отправляем..." : "Отправить заявку →"}
+                  </button>
+                </form>
+              )}
             </div>
 
             <p className="text-xs text-center mt-5" style={{ color: "var(--color-text-faint)" }}>

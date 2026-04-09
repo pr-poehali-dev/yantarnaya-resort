@@ -1,0 +1,26 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Сохранение заявки",
+      "method": "POST",
+      "path": "/",
+      "body": { "name": "Тест Тестов", "phone": "+79001234567", "channel": "site", "message": "Хочу забронировать домик" },
+      "expectedStatus": 200,
+      "expectedBody": { "ok": true },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Ошибка без имени",
+      "method": "POST",
+      "path": "/",
+      "body": { "phone": "+79001234567" },
+      "expectedStatus": 400
+    }
+  ]
+}
