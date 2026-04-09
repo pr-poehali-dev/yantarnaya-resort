@@ -81,6 +81,64 @@ const REVIEWS = [
   { init: "О", name: "Ольга, 45 лет", loc: "", text: "«Янтарная» — это настоящая жемчужина! Приехали с детьми на выходные и зарядились энергией на весь месяц. Территория ухоженная, беседки уютные, мангал всегда готов к использованию. Дети целый день на пляже — счастливые и довольные. А какой закат мы увидели в последний вечер — словами не передать! Спасибо огромное! 🌅" },
 ];
 
+function ReviewsCarousel() {
+  const [current, setCurrent] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setCurrent((c) => (c + 1) % REVIEWS.length);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, []);
+
+  const goTo = (idx: number) => {
+    setCurrent(idx);
+    startTimer();
+  };
+
+  const prev = () => goTo((current - 1 + REVIEWS.length) % REVIEWS.length);
+  const next = () => goTo((current + 1) % REVIEWS.length);
+
+  const r = REVIEWS[current];
+
+  return (
+    <div className="relative max-w-2xl mx-auto">
+      <div className="overflow-hidden rounded-[0.875rem] border p-8" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)", minHeight: 220 }}>
+        <div key={current} style={{ animation: "fadeIn 0.4s ease" }}>
+          <div className="text-base mb-4" style={{ color: "var(--color-gold)", letterSpacing: "3px" }}>★★★★★</div>
+          <p className="text-base leading-[1.8] mb-6 italic" style={{ color: "var(--color-text-muted)" }}>«{r.text}»</p>
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 font-display font-semibold text-base" style={{ background: "var(--color-primary-light)", color: "var(--color-primary)" }}>{r.init}</div>
+            <div>
+              <div className="text-sm font-medium" style={{ color: "var(--color-text)" }}>{r.name}</div>
+              {r.loc && <div className="text-xs mt-0.5" style={{ color: "var(--color-text-faint)" }}>{r.loc}</div>}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button onClick={prev} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 w-10 h-10 rounded-full flex items-center justify-center border transition-opacity hover:opacity-80" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}>
+        <Icon name="ChevronLeft" size={18} />
+      </button>
+      <button onClick={next} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 w-10 h-10 rounded-full flex items-center justify-center border transition-opacity hover:opacity-80" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}>
+        <Icon name="ChevronRight" size={18} />
+      </button>
+
+      <div className="flex justify-center gap-2 mt-6">
+        {REVIEWS.map((_, i) => (
+          <button key={i} onClick={() => goTo(i)} className="w-2 h-2 rounded-full transition-all" style={{ background: i === current ? "var(--color-primary)" : "var(--color-border)", transform: i === current ? "scale(1.3)" : "scale(1)" }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const PROMOS = [
   { badge: "Раннее бронирование", disc: "−15%", desc: "При бронировании за 30 и более дней до заезда. Действует на все категории домиков." },
   { badge: "Акция выходного дня", disc: "3-я ночь в подарок", desc: "2 ночи = 3-я бесплатно. Действует сентябрь – май. Для всех гостей без исключений." },
@@ -387,21 +445,7 @@ export default function Index() {
               <div className="text-xs mt-1" style={{ color: "var(--color-text-faint)" }}>TripAdvisor · Яндекс · Booking</div>
             </div>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {REVIEWS.map((r, i) => (
-              <article key={r.name} className="reveal p-6 rounded-[0.875rem] border" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)", transitionDelay: `${i * 0.12}s` }}>
-                <div className="text-sm mb-4" style={{ color: "var(--color-gold)", letterSpacing: "2px" }}>★★★★★</div>
-                <p className="text-sm leading-[1.75] mb-5 italic" style={{ color: "var(--color-text-muted)" }}>«{r.text}»</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 font-display font-semibold text-base" style={{ background: "var(--color-primary-light)", color: "var(--color-primary)" }}>{r.init}</div>
-                  <div>
-                    <div className="text-sm font-medium" style={{ color: "var(--color-text)" }}>{r.name}</div>
-                    <div className="text-xs mt-0.5" style={{ color: "var(--color-text-faint)" }}>{r.loc}</div>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <ReviewsCarousel />
         </div>
       </section>
 
