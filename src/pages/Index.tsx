@@ -38,18 +38,27 @@ const NAV_LINKS = [
 ];
 
 const FEATURES = [
-  { icon: "🌊", title: "Море — в 50 метрах", desc: "Собственный пляж без посторонних. Шезлонги, тень, тишина. Закаты — каждый вечер. Зимой — штормящее море в полном одиночестве." },
-  { icon: "🔥", title: "Открыты круглый год", desc: "Январь или август — неважно. Русская баня, тёплый бассейн, домики с камином ждут в любую погоду. Межсезонье — наше любимое время." },
-  { icon: "🧖", title: "Персональный сервис", desc: "Мы знаем каждого гостя по имени. Ваши предпочтения, любимый столик, нужная температура в бане — всё готово до вашего приезда." },
+  { icon: "🌊", title: "Золотой песок и чистое море", desc: "Быстро прогреваемая вода, песчаное дно, пологий спуск в море. Больше солнечных дней, чем в других районах Приморского края." },
+  { icon: "🔥", title: "Открыты круглый год", desc: "Настоящая русская баня на берегу моря. Домики с видом на воду, мангальная зона, беседки, костровое место и качели — в любой сезон." },
+  { icon: "🏡", title: "Домашний уют", desc: "Полностью укомплектованные домики — от постельного белья до штопора. Чистота, тёплая атмосфера и индивидуальная забота о каждом отдыхающем." },
+];
+
+const CABINS = [
+  { icon: "🛖", name: "Модуль 2-местный", desc: "Уютный компактный домик для двоих" },
+  { icon: "🏠", name: "Студия 4-местная", desc: "Просторная студия для семьи" },
+  { icon: "🏡", name: 'Большой дом "Шале"', desc: "Вместительный дом до 10 человек" },
+  { icon: "🌿", name: "Экодом", desc: "Близость к природе с комфортом" },
+  { icon: "🫘", name: "Капсула", desc: "Оригинальный формат размещения" },
+  { icon: "🚀", name: "Космолет", desc: "Необычный домик — незабываемый отдых" },
 ];
 
 const SERVICES_EXTRA = [
-  ["🚤", "SUP, каяки, катер, рыбалка"],
-  ["🏐", "Пляжный волейбол, теннис, велосипеды"],
-  ["🎉", "Корпоративы и тимбилдинг"],
-  ["🧒", "Детская анимация и площадки"],
-  ["🗺️", "Экскурсии и джиптуры"],
-  ["🐟", "Рыбалка: приготовим улов"],
+  ["🚤", "Прогулки на катере"],
+  ["🥾", "Турпоходы по побережью"],
+  ["🎉", "Ретриты и тренинги"],
+  ["🧒", "Детская площадка"],
+  ["🔥", "Мангальная зона и беседки"],
+  ["🐟", "Рыбалка в чистом море"],
 ];
 
 const LOYALTY = [
@@ -338,7 +347,7 @@ export default function Index() {
               <div className="absolute inset-0 flex flex-col justify-end p-6" style={{ background: "linear-gradient(to top, rgba(10,20,25,0.82) 0%, rgba(10,20,25,0.1) 60%, transparent 100%)" }}>
                 <span className="text-xs tracking-[0.1em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.65)" }}>Размещение</span>
                 <h3 className="font-display font-normal leading-[1.15]" style={{ fontSize: "clamp(1.5rem,1.2rem + 1.25vw,2.25rem)", color: "#fff" }}>Домики и коттеджи у воды</h3>
-                <p className="text-sm mt-2 leading-[1.5]" style={{ color: "rgba(255,255,255,0.75)", maxWidth: "40ch" }}>От уютного номера с видом на море до просторного коттеджа с частной верандой. 8 категорий.</p>
+                <p className="text-sm mt-2 leading-[1.5]" style={{ color: "rgba(255,255,255,0.75)", maxWidth: "40ch" }}>Домики на 2–10 человек: Модуль, Студия, Шале, Экодом, Капсула, Космолет — все с видом на море.</p>
               </div>
             </div>
             <div className="reveal rounded-[0.875rem] overflow-hidden relative group cursor-default" style={{ boxShadow: "var(--shadow-md)" }}>
@@ -366,6 +375,20 @@ export default function Index() {
               ))}
             </div>
           </div>
+
+          {/* Cabins */}
+          <div className="mt-4">
+            <h3 className="font-display text-xl font-normal mb-4 reveal" style={{ color: "var(--color-text)" }}>Наши домики</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {CABINS.map((c, i) => (
+                <div key={c.name} className="reveal p-4 rounded-[0.875rem] border text-center" style={{ background: "var(--color-surface-2)", borderColor: "var(--color-border)", transitionDelay: `${i * 0.07}s` }}>
+                  <div className="text-3xl mb-2">{c.icon}</div>
+                  <div className="text-sm font-medium leading-[1.3] mb-1" style={{ color: "var(--color-text)" }}>{c.name}</div>
+                  <div className="text-xs" style={{ color: "var(--color-text-faint)" }}>{c.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -381,17 +404,17 @@ export default function Index() {
               </div>
             </div>
             <div className="reveal">
-              <span className="section-label">Представьте себе</span>
+              <span className="section-label">Наша история</span>
               <h2 className="font-display font-normal mb-6" style={{ fontSize: "clamp(2rem,1.2rem + 2.5vw,3.5rem)", color: "var(--color-text)", lineHeight: 1.1 }}>
-                Так выглядит настоящий отдых
+                Открыты для гостей<br />с 2011 года
               </h2>
+              <p className="mb-4 leading-[1.8]" style={{ color: "var(--color-text-muted)" }}>Всё началось с летних домиков без удобств. Не было вдохновения, казалось, что база никому не интересна. Тогда мы задали себе вопрос: а как бы хотелось отдыхать нам самим?</p>
+              <p className="mb-4 leading-[1.8]" style={{ color: "var(--color-text-muted)" }}>Прорывным стал 2021 год: построили с нуля полностью укомплектованный домик с верандой и видом на море, провели реконструкцию большого дома, отсыпали территорию, построили души и туалеты, полностью заменили электрику.</p>
               <blockquote className="font-display text-xl italic leading-[1.5] my-7 pl-6" style={{ borderLeft: "3px solid var(--color-primary)", color: "var(--color-text)" }}>
-                «Просыпаетесь не по будильнику — а потому что солнце уже светит в окно. За стеклом — море. Тихое, ваше.»
+                «Уют на базе создаётся руками нашей хозяйки Марины. Впереди ещё много идей и большие планы.»
               </blockquote>
-              <p className="mb-4 leading-[1.8]" style={{ color: "var(--color-text-muted)" }}>На завтрак — свежая выпечка и кофе на открытой веранде. Дети уже убежали на пляж, вы не торопитесь никуда.</p>
-              <p className="mb-4 leading-[1.8]" style={{ color: "var(--color-text-muted)" }}>Вечером — баня, запах можжевельника, деревянная купель, звёзды над головой. Никаких планов. Только вы и море.</p>
-              <p className="mb-8 leading-[1.8]" style={{ color: "var(--color-text-muted)" }}>Именно так выглядит то, ради чего стоит приехать — не один раз, а каждый сезон.</p>
-              <button onClick={() => scrollTo("#booking")} className="btn-sea">Хочу так же →</button>
+              <p className="mb-8 leading-[1.8]" style={{ color: "var(--color-text-muted)" }}>С любовью к вам, коллектив базы отдыха «Янтарная»</p>
+              <button onClick={() => scrollTo("#booking")} className="btn-sea">Забронировать домик →</button>
             </div>
           </div>
         </div>
@@ -668,7 +691,7 @@ export default function Index() {
             </div>
             <div>
               <h4 className="text-sm font-semibold mb-5 font-body" style={{ color: "#fff" }}>Контакты</h4>
-              {[["📍","Приморский край, Хасанский МО, с. Перевозное, ул. Карьерная д.8"],["📞","+7 (994) 101-69-22"],["💬","WhatsApp / Telegram"],["📧","info@yantarnaya-more.ru"]].map(([icon, text]) => (
+              {[["📍","692720, Приморский край, Хасанский МО, с. Перевозное, ул. Карьерная д.8"],["📞","+7 (994) 101-69-22"],["💬","WhatsApp / Telegram"],["🌐","yant-baza.ru"]].map(([icon, text]) => (
                 <div key={text} className="flex items-start gap-3 mb-3 text-sm font-body" style={{ color: "rgba(255,255,255,0.55)" }}>
                   <span className="shrink-0">{icon}</span><span>{text}</span>
                 </div>
@@ -676,8 +699,8 @@ export default function Index() {
             </div>
           </div>
           <div className="border-t flex flex-wrap items-center justify-between gap-4 pt-6 text-xs font-body" style={{ borderColor: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.35)" }}>
-            <span>© 2026 База отдыха «Янтарная». Все права защищены.</span>
-            <span>Сделано с ❤ у моря</span>
+            <span>© 2026 База отдыха «Янтарная». ИП Жуперина М.Н. ОГРНИП 316253600070601 · ИНН 252101873186</span>
+            <a href="#" className="underline" style={{ color: "rgba(255,255,255,0.35)" }}>Политика конфиденциальности</a>
           </div>
         </div>
       </footer>
