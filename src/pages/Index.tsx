@@ -44,12 +44,55 @@ const FEATURES = [
 ];
 
 const CABINS = [
-  { icon: "🛖", name: "Модуль 2-местный", desc: "Уютный компактный домик для двоих" },
-  { icon: "🏠", name: "Студия 4-местная", desc: "Просторная студия для семьи" },
-  { icon: "🏡", name: 'Большой дом "Шале"', desc: "Вместительный дом до 10 человек" },
-  { icon: "🌿", name: "Экодом", desc: "Близость к природе с комфортом" },
-  { icon: "🫘", name: "Капсула", desc: "Оригинальный формат размещения" },
-  { icon: "🚀", name: "Космолет", desc: "Необычный домик — незабываемый отдых" },
+  {
+    name: "Летние домики",
+    desc: "Уютные домики с верандой и видом на море. Все необходимое для комфортного отдыха.",
+    guests: "до 10 чел.",
+    img: "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/bucket/2793ac34-55c5-4502-94d4-276fa90e2d14.jpg",
+    imgPos: "top",
+  },
+  {
+    name: "Модуль 2х местный",
+    desc: "Компактный и уютный номер для двоих с кроватью, столиком и кондиционером.",
+    guests: "2 чел.",
+    img: "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/bucket/2793ac34-55c5-4502-94d4-276fa90e2d14.jpg",
+    imgPos: "center",
+  },
+  {
+    name: "Студия 4х местная",
+    desc: "Просторная студия с большой верандой, видом на море. Идеально для семьи.",
+    guests: "4 чел.",
+    img: "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/bucket/cec24f0a-e969-4d4a-905c-4b43e951393b.jpg",
+    imgPos: "top",
+  },
+  {
+    name: 'Большой дом "Шале"',
+    desc: "Просторный дом для большой компании с полным комфортом. Зелёная крыша, большая территория.",
+    guests: "до 10 чел.",
+    img: "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/bucket/cec24f0a-e969-4d4a-905c-4b43e951393b.jpg",
+    imgPos: "center",
+  },
+  {
+    name: "Экодом",
+    desc: "Домик в окружении природы с занавесками и панорамным видом на море.",
+    guests: "2–4 чел.",
+    img: "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/bucket/cec24f0a-e969-4d4a-905c-4b43e951393b.jpg",
+    imgPos: "bottom",
+  },
+  {
+    name: "Капсула",
+    desc: "Современный номер с мини-кухней, холодильником и всем необходимым.",
+    guests: "2 чел.",
+    img: "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/bucket/117c412d-fb2b-43ab-9549-e805d5f1a39b.jpg",
+    imgPos: "top",
+  },
+  {
+    name: "Космолет",
+    desc: "Уникальный дизайнерский домик с эффектной подсветкой прямо у моря.",
+    guests: "2–3 чел.",
+    img: "https://cdn.poehali.dev/projects/00459ce7-4eaf-407e-8b0b-a35e0148bc22/bucket/28d7ebd0-2f5b-493b-a91e-c43dd5a29102.jpg",
+    imgPos: "top",
+  },
 ];
 
 const SERVICES_EXTRA = [
@@ -253,8 +296,8 @@ export default function Index() {
           <h1 className="font-display font-normal mb-6" style={{ fontSize: "clamp(2.8rem,1rem + 5.5vw,6rem)", color: "#fff", lineHeight: 1.05, letterSpacing: "-0.02em" }}>
             Море. Тишина.<br /><em style={{ color: "#7dd4e0" }}>Ваше время.</em>
           </h1>
-          <p className="mb-10 font-light mx-auto" style={{ fontSize: "clamp(1.125rem,1rem + 0.75vw,1.5rem)", color: "rgba(255,255,255,0.8)", maxWidth: "560px", lineHeight: 1.6 }}>
-            База отдыха «Янтарная» — собственный пляж, СПА, баня и домики у самой воды
+          <p className="mb-10 font-light mx-auto" style={{ fontSize: "clamp(1.125rem,1rem + 0.75vw,1.5rem)", color: "rgba(255,255,255,0.8)", maxWidth: "600px", lineHeight: 1.7 }}>
+            Отдыхайте у нас круглый год! Дома на 2–10 человек с видом на море. Детская площадка, мангальная зона, беседки, лежаки, костровое место, качели. Прогулки на катере, рыбалка, турпоходы по побережью.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button onClick={() => scrollTo("#booking")} className="btn-sea">Забронировать от 4 500 ₽/сут.</button>
@@ -377,14 +420,21 @@ export default function Index() {
           </div>
 
           {/* Cabins */}
-          <div className="mt-4">
-            <h3 className="font-display text-xl font-normal mb-4 reveal" style={{ color: "var(--color-text)" }}>Наши домики</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="mt-8">
+            <h3 className="font-display text-2xl font-normal mb-6 reveal" style={{ color: "var(--color-text)" }}>Наши домики</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {CABINS.map((c, i) => (
-                <div key={c.name} className="reveal p-4 rounded-[0.875rem] border text-center" style={{ background: "var(--color-surface-2)", borderColor: "var(--color-border)", transitionDelay: `${i * 0.07}s` }}>
-                  <div className="text-3xl mb-2">{c.icon}</div>
-                  <div className="text-sm font-medium leading-[1.3] mb-1" style={{ color: "var(--color-text)" }}>{c.name}</div>
-                  <div className="text-xs" style={{ color: "var(--color-text-faint)" }}>{c.desc}</div>
+                <div key={c.name} className="reveal rounded-[0.875rem] overflow-hidden border group cursor-default" style={{ background: "var(--color-surface-2)", borderColor: "var(--color-border)", boxShadow: "var(--shadow-sm)", transitionDelay: `${i * 0.07}s` }}>
+                  <div className="relative overflow-hidden" style={{ height: 200 }}>
+                    <img src={c.img} alt={c.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" style={{ objectPosition: c.imgPos }} loading="lazy" />
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,20,25,0.55) 0%, transparent 60%)" }} />
+                    <span className="absolute bottom-3 right-3 text-xs px-2 py-1 rounded-full font-body" style={{ background: "rgba(255,255,255,0.18)", backdropFilter: "blur(8px)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)" }}>{c.guests}</span>
+                  </div>
+                  <div className="p-4">
+                    <div className="font-display text-lg font-semibold mb-1" style={{ color: "var(--color-text)" }}>{c.name}</div>
+                    <div className="text-sm leading-[1.6] mb-3" style={{ color: "var(--color-text-muted)" }}>{c.desc}</div>
+                    <button onClick={() => document.querySelector("#booking")?.scrollIntoView({ behavior: "smooth" })} className="text-sm font-medium underline underline-offset-2" style={{ color: "var(--color-primary)" }}>Узнать цену →</button>
+                  </div>
                 </div>
               ))}
             </div>
